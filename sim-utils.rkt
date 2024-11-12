@@ -1,0 +1,52 @@
+(module sim-utils racket
+  (provide sim-secs2hour
+           sim-log!)
+
+  (require "sim-event.rkt")
+  (require "sim-lane.rkt")
+  
+
+(define (sim-secs2hour seconds) ; converts seconds into hours, minutes and seconds
+  ;; Calculates total minutes
+  (let* ((tot-mins (quotient seconds 60)) ;sequentially creates bindings 
+         ;; Calculates hours
+         (hrs (quotient tot-mins 60))
+         ;; Calculates remaining minutes
+         (mins (remainder tot-mins 60))
+         ;; Calculates remaining seconds
+         (secs (remainder seconds 60)))
+    ;; Returns a list that contains hours, minutes, and seconds
+    (list hrs mins secs)))
+
+
+
+  ; IO()
+  (define (sim-log! time event lanes)  ;; can omit time?
+    (let*
+        ([aux (sim-secs2hour (event-time event))]
+         [hours (first aux)]
+         [minutes (second aux)]
+         [secs (third aux)]
+         [ev (event->string event)]
+         [user (event-user event)]
+         [lanes-str (apply
+                     string-append 
+                     (map
+                      (lambda (x)(format "~n\t~a" (lane->string x)))
+                      lanes))]
+         )
+      (printf "~a:~a:~a|User: ~a|~a~a~n"
+              (~r hours #:min-width 2 #:pad-string "0")
+              (~r minutes #:min-width 2 #:pad-string "0") 
+              (~r secs #:min-width 2 #:pad-string "0")
+              (~r user #:min-width 2 )
+              ev
+              lanes-str
+              )
+             
+      ))
+  
+
+  )
+      
+         

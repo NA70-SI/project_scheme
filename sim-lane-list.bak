@@ -1,0 +1,20 @@
+;; done
+(module sim-lane-list racket
+  (provide lane-list?
+           less-crowded
+           )
+
+  (require "sim-lane.rkt")
+
+  
+  
+  (define (lane-list? lst)
+    (raise 'lane-list))
+    
+    
+  ;; This is a sort of "priority queue"
+  ;; in O(nlog(n))
+  (define (less-crowded sim-lanes)
+    (raise 'less-crowded)
+    )
+  )
